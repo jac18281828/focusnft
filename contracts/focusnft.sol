@@ -19,9 +19,9 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract FocusNFT is ERC721, Ownable {
     event FocusTokenMint(uint256 id, address recipient);
+    uint256 public constant MAX_SUPPLY = 10000;
 
     string public baseUri;
-    uint256 public constant MAX_SUPPLY = 10_000;
     uint256 private currentTokenId = 0;
 
     constructor(string memory _baseUri) ERC721("Focus", "FCUS") {

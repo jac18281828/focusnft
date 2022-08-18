@@ -7,7 +7,7 @@
 ### Deploy the smart contract 
 
 
-1. forge create JACNFT --contracts contracts/jacnft.sol:JACNFT --private-key ***** --rpc-url http://ethnode:8545
+1. forge create FocusNFT --contracts contracts/focusnft.sol:FocusNFT --private-key ***** --rpc-url http://ethnode:8545
 
 ```
 Compiler run successful

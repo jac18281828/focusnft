@@ -78,9 +78,9 @@ COPY --chown=jac:jac . .
 ENV USER=jac
 USER jac
 ENV PATH=${PATH}:~/.cargo/bin
-#RUN yarn install
-#RUN yarn lint
-#RUN ~jac/.cargo/bin/forge build --sizes
-#RUN ~jac/.cargo/bin/forge test -vvv
+RUN yarn install
+RUN yarn lint
+RUN ~jac/.cargo/bin/forge build --sizes
+RUN ~jac/.cargo/bin/forge test -vvv
 
 
