@@ -1,0 +1,32 @@
+{
+  "name": "jacnft",
+  "version": "0.0.1",
+  "description": "openzeppelin NFT Contract Complete Example",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "build": "~mr/.cargo/bin/forge build --sizes",
+    "lint": "solium -d contracts",
+    "lint:fix": "solium -d contracts --fix",
+    "test": "~mr/.cargo/bin/forge test -vvv"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jac18281828/ethnft.git"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "4.7.3",
+    "ethlint": "1.2.5"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/jac18281828/ethnft/issues"
+  },
+  "homepage": "https://github.com/jac18281828/ethnft"
+}

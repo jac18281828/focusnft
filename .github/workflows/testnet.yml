@@ -1,0 +1,49 @@
+name: Göerli Testnet
+
+on: workflow_dispatch
+
+env:
+  FOUNDRY_PROFILE: ci
+  DEVNET_RPC: ${{ secrets.ALCHEMY_DEVNET_RPC }}
+  DEVNET_WALLET: ${{ secrets.GOERLI_WALLET }}
+  ETHERSCAN_API_KEY: ${{ secrets.ETHERSCAN_API_KEY }}
+
+jobs:
+  check:
+    strategy:
+      fail-fast: true
+
+    name: FocusNFT
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: nightly
+
+      - name: Yarn install
+        run: |
+          yarn install --dev
+          yarn lint
+          yarn install --production
+
+      - name: Run Forge build
+        run: |
+          forge --version
+          forge build --sizes
+        id: build
+
+      - name: Run Forge tests
+        run: |
+          forge test -vvv
+        id: test
+
+      - name: Deploy Göerli Testnet
+        run: |
+          forge create --contracts contracts/focusnft.sol --rpc-url ${DEVNET_RPC} --private-key ${DEVNET_WALLET} --etherscan-api-key ${ETHERSCAN_API_KEY} --verify FocusNFT --constructor-args 'https://ipfs.io/ipfs/QmbPRkfUxB5mA2JXr5ZUWxLzpvEGT5qoRGe8z7GPicokXc'
+          forge inspect contracts/focusnft.sol:FocusNFT abi
+        if: ${{ github.event_name == 'release' && github.event.action == 'created' }}
