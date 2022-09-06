@@ -1,7 +1,12 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.15;
 
+import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
+import "@openzeppelin/contracts/interfaces/IERC721.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol";
+
 import "forge-std/Test.sol";
+
 import "../contracts/focusnft.sol";
 import "@openzeppelin/contracts/interfaces/IERC721Receiver.sol";
 
@@ -51,6 +56,21 @@ contract FocusNftTests is Test {
     function testFailUnSafeContractReceiver() public {
         vm.etch(address(1), bytes("mock code"));
         nft.mintToken(address(1));
+    }
+
+    function testSupportsERC721() public {
+        bytes4 esId = type(IERC721).interfaceId;
+        assertTrue(nft.supportsInterface(esId));
+    }
+
+    function testSupportsERC721Enumerable() public {
+        bytes4 esId = type(IERC721Enumerable).interfaceId;
+        assertTrue(nft.supportsInterface(esId));
+    }
+
+    function testSupportsERC165() public {
+        bytes4 esId = type(ERC165).interfaceId;
+        assertTrue(nft.supportsInterface(esId));
     }
 }
 

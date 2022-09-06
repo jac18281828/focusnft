@@ -14,24 +14,34 @@
  */
 pragma solidity 0.8.15;
 
+import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract FocusNFT is ERC721, Ownable {
+contract FocusNFT is ERC721, IERC721Enumerable, Ownable {
     event FocusTokenMint(uint256 id, address recipient);
     uint256 public constant MAX_SUPPLY = 10000;
 
-    string public baseUri;
-    uint256 private currentTokenId = 0;
+    string public _baseUri;
+    uint256 private _currentTokenId = 0;
 
-    constructor(string memory _baseUri) ERC721("Focus", "FCUS") {
-        baseUri = _baseUri;
+    mapping(uint256 => uint256) private _tokenSupply;
+    mapping(address => OwnerSupply) private _ownerSupply;
+
+    struct OwnerSupply {
+        uint256 _totalCount;
+        mapping(uint256 => uint256) _supply;
+    }
+
+    constructor(string memory __baseUri) ERC721("Focus", "FCUS") {
+        _baseUri = __baseUri;
     }
 
     function mintToken(address recipient) public payable returns (uint256) {
-        require(currentTokenId < MAX_SUPPLY, "Total supply exhausted");
-        currentTokenId++;
-        uint256 tokenId = currentTokenId;
+        require(_currentTokenId < MAX_SUPPLY, "Total supply exhausted");
+        _currentTokenId++;
+        uint256 tokenId = _currentTokenId;
         _safeMint(recipient, tokenId);
         emit FocusTokenMint(tokenId, recipient);
         return tokenId;
@@ -45,10 +55,42 @@ contract FocusNFT is ERC721, Ownable {
         returns (string memory)
     {
         require(ownerOf(tokenId) != address(0), "Token does not exist");
-        return bytes(baseUri).length > 0 ? baseUri : "";
+        return bytes(_baseUri).length > 0 ? _baseUri : "";
     }
 
     function burnToken(uint256 tokenId) public {
         _burn(tokenId);
+    }
+
+    function totalSupply() external view returns (uint256) {
+        return _currentTokenId;
+    }
+
+    function tokenOfOwnerByIndex(address _owner, uint256 _index)
+        external
+        view
+        returns (uint256)
+    {
+        OwnerSupply storage ownerSupply = _ownerSupply[_owner];
+        require(_index < ownerSupply._totalCount, "Invalid token index");
+        return ownerSupply._supply[_index];
+    }
+
+    function tokenByIndex(uint256 index) public view returns (uint256) {
+        require(index < _currentTokenId, "Invalid token index");
+        return _tokenSupply[index];
+    }
+
+    function supportsInterface(bytes4 interfaceId)
+        public
+        view
+        virtual
+        override(IERC165, ERC721)
+        returns (bool)
+    {
+        return
+            interfaceId == type(IERC721Enumerable).interfaceId ||
+            interfaceId == type(IERC721).interfaceId ||
+            super.supportsInterface(interfaceId);
     }
 }
