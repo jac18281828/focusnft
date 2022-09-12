@@ -1,6 +1,6 @@
 {
-  "name": "jacnft",
-  "version": "0.2.0",
+  "name": "focusnft",
+  "version": "0.2.1",
   "description": "openzeppelin NFT Contract Complete Example",
   "main": "index.js",
   "directories": {

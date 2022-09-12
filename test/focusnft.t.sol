@@ -29,6 +29,77 @@ contract FocusNftTests is Test {
         assertEq(nft.ownerOf(tokenId), address(1), "token 1 owned by 1");
     }
 
+    function testTransferFrom() public {
+        uint256 tokenId = nft.mintToken(address(1));
+        vm.prank(address(1));
+        nft.transferFrom(address(1), address(2), tokenId);
+        assertEq(nft.ownerOf(tokenId), address(2), "token 1 owned by 1");
+    }
+
+    function testSafeTransfer() public {
+        uint256 tokenId = nft.mintToken(address(1));
+        vm.prank(address(1));
+        nft.safeTransferFrom(address(1), address(2), tokenId);
+        assertEq(nft.ownerOf(tokenId), address(2), "token 1 owned by 1");
+    }
+
+    function testSafeTransferData() public {
+        uint256 tokenId = nft.mintToken(address(1));
+        vm.prank(address(1));
+        nft.safeTransferFrom(address(1), address(2), tokenId, bytes(""));
+        assertEq(nft.ownerOf(tokenId), address(2), "token 1 owned by 1");
+    }
+
+    function testTotalSupply() public {
+        nft.mintToken(address(1));
+        assertEq(nft.totalSupply(), 1);
+    }
+
+    function testTokenByIndex() public {
+        uint256 tokenId1 = nft.mintToken(address(1));
+        uint256 tokenId2 = nft.mintToken(address(2));
+        assertEq(nft.tokenByIndex(0), tokenId1);
+        assertEq(nft.tokenByIndex(1), tokenId2);
+    }
+
+    function testTokenOfOwnerByIndex() public {
+        uint256 tokenId10 = nft.mintToken(address(1));
+        uint256 tokenId20 = nft.mintToken(address(2));
+        uint256 tokenId11 = nft.mintToken(address(1));
+        assertEq(nft.tokenOfOwnerByIndex(address(1), 0), tokenId10);
+        assertEq(nft.tokenOfOwnerByIndex(address(1), 1), tokenId11);
+        assertEq(nft.tokenOfOwnerByIndex(address(2), 0), tokenId20);
+    }
+
+    function testTransferFromOwnerByIndex() public {
+        uint256 tokenId = nft.mintToken(address(1));
+        vm.prank(address(1));
+        nft.transferFrom(address(1), address(2), tokenId);
+        assertEq(nft.tokenByIndex(0), tokenId);
+        assertEq(nft.totalSupply(), 1);
+        assertEq(nft.balanceOf(address(1)), 0);
+        assertEq(nft.balanceOf(address(2)), 1);
+        assertEq(nft.tokenOfOwnerByIndex(address(2), 0), tokenId);
+    }
+
+    function testFailTransferFromNoLongerOwnerByIndex() public {
+        uint256 tokenId = nft.mintToken(address(1));
+        vm.prank(address(1));
+        nft.transferFrom(address(1), address(2), tokenId);
+        assertEq(nft.tokenByIndex(0), tokenId);
+        nft.tokenOfOwnerByIndex(address(1), 0);
+    }
+
+    function testFailTokenOfOwnerByIndexNotOwner() public {
+        nft.mintToken(address(1));
+        nft.tokenOfOwnerByIndex(address(2), 0);
+    }
+
+    function testFailTokenOfOwnerByInvalidIndex() public {
+        nft.mintToken(address(1));
+        nft.tokenOfOwnerByIndex(address(1), 1);
+    }
+
     function testFailMintMaxTotalSupply() public {
         uint256 slot = stdstore
             .target(address(nft))

@@ -26,11 +26,12 @@ contract FocusNFT is ERC721, IERC721Enumerable, Ownable {
     string public _baseUri;
     uint256 private _currentTokenId = 0;
 
-    mapping(uint256 => uint256) private _tokenSupply;
+    mapping(uint256 => uint256) private _tokenSupplyIndex;
     mapping(address => OwnerSupply) private _ownerSupply;
 
     struct OwnerSupply {
         uint256 _totalCount;
+        // index to tokenId
         mapping(uint256 => uint256) _supply;
     }
 
@@ -38,13 +39,40 @@ contract FocusNFT is ERC721, IERC721Enumerable, Ownable {
         _baseUri = __baseUri;
     }
 
-    function mintToken(address recipient) public payable returns (uint256) {
+    modifier requireValidRecipient(address _recipient) {
+        require(_recipient != address(0), "invalid recipient");
+        _;
+    }
+
+    modifier requireValidTokenId(uint256 _tokenId) {
+        require(_tokenId > 0, "invalid tokenId");
+        _;
+    }
+
+    function mintToken(address _recipient)
+        public
+        payable
+        requireValidRecipient(_recipient)
+        returns (uint256)
+    {
         require(_currentTokenId < MAX_SUPPLY, "Total supply exhausted");
-        _currentTokenId++;
+        uint256 tokenIndex = _currentTokenId++;
         uint256 tokenId = _currentTokenId;
-        _safeMint(recipient, tokenId);
-        emit FocusTokenMint(tokenId, recipient);
+        _safeMint(_recipient, tokenId);
+        _tokenSupplyIndex[tokenIndex] = tokenId;
+        addOwnerSupply(_recipient, tokenId);
+        emit FocusTokenMint(tokenId, _recipient);
         return tokenId;
+    }
+
+    function transferFrom(
+        address _from,
+        address _to,
+        uint256 _tokenId
+    ) public virtual override(ERC721, IERC721) {
+        super.transferFrom(_from, _to, _tokenId);
+        removeOwnerSupply(_from, _tokenId);
+        addOwnerSupply(_to, _tokenId);
     }
 
     function tokenURI(uint256 tokenId)
@@ -56,10 +84,6 @@ contract FocusNFT is ERC721, IERC721Enumerable, Ownable {
     {
         require(ownerOf(tokenId) != address(0), "Token does not exist");
         return bytes(_baseUri).length > 0 ? _baseUri : "";
-    }
-
-    function burnToken(uint256 tokenId) public {
-        _burn(tokenId);
     }
 
     function totalSupply() external view returns (uint256) {
@@ -76,9 +100,9 @@ contract FocusNFT is ERC721, IERC721Enumerable, Ownable {
         return ownerSupply._supply[_index];
     }
 
-    function tokenByIndex(uint256 index) public view returns (uint256) {
-        require(index < _currentTokenId, "Invalid token index");
-        return _tokenSupply[index];
+    function tokenByIndex(uint256 _index) public view returns (uint256) {
+        require(_index < _currentTokenId, "Invalid token index");
+        return _tokenSupplyIndex[_index];
     }
 
     function supportsInterface(bytes4 interfaceId)
@@ -90,7 +114,35 @@ contract FocusNFT is ERC721, IERC721Enumerable, Ownable {
     {
         return
             interfaceId == type(IERC721Enumerable).interfaceId ||
-            interfaceId == type(IERC721).interfaceId ||
             super.supportsInterface(interfaceId);
+    }
+
+    function addOwnerSupply(address _recipient, uint256 _tokenId) private {
+        if (_recipient != address(0)) {
+            OwnerSupply storage ownerSupply = _ownerSupply[_recipient];
+            uint256 ownerIndex = ownerSupply._totalCount++;
+            ownerSupply._supply[ownerIndex] = _tokenId;
+        }
+    }
+
+    function removeOwnerSupply(address _wallet, uint256 _tokenId)
+        private
+        requireValidTokenId(_tokenId)
+    {
+        if (_wallet != address(0)) {
+            OwnerSupply storage ownerSupply = _ownerSupply[_wallet];
+            for (uint256 i = 0; i < ownerSupply._totalCount; i++) {
+                if (_tokenId == ownerSupply._supply[i]) {
+                    for (uint256 j = i; j < ownerSupply._totalCount; j++) {
+                        // re-map each member of the range
+                        ownerSupply._supply[j] = ownerSupply._supply[j + 1];
+                    }
+                    ownerSupply._totalCount--;
+                    ownerSupply._supply[ownerSupply._totalCount] = 0;
+                    return;
+                }
+            }
+            revert("Token not found in owner list");
+        }
     }
 }

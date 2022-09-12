@@ -71,7 +71,7 @@ ARG ETH_VERSION=1.10.21
 COPY --from=builder /go-ethereum/go-ethereum-${ETH_VERSION}/build/bin /usr/local/bin
 COPY --chown=jac:jac --from=builder /home/jac/.cargo /home/jac/.cargo
 
-ARG PROJECT=jacnft
+ARG PROJECT=focusnft
 WORKDIR /workspaces/${PROJECT}
 RUN chown -R jac.jac .
 COPY --chown=jac:jac . .
