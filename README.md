@@ -17,31 +17,30 @@ Transaction hash: 0xe82a3c9edf283cea35e2ae54229b8e24fa6d6b7258304a77d9d12448a7ed
 
 1. `forge create --contracts contracts/focusnft.sol --rpc-url ${DEVNET_RPC} --private-key ${DEVNET_WALLET} --etherscan-api-key ${ETHERSCAN_API_KEY} --verify FocusNFT --constructor-args 'https://ipfs.io/ipfs/QmbPRkfUxB5mA2JXr5ZUWxLzpvEGT5qoRGe8z7GPicokXc'`
 
+
+### 0.2.1
+
 ```
-Compiling 19 files with 0.8.15
-Solc 0.8.15 finished in 2.63s
+Compiling 21 files with 0.8.15
+Solc 0.8.15 finished in 3.51s
 Compiler run successful
 Deployer: 0x6CEb0bF1f28ca4165d5C0A04f61DC733987eD6ad
-Deployed to: 0xdCB27C0bF715f6F5D3a91Fd19C872778687eFA56
-Transaction hash: 0x7ad24f5ac4955d02f36158f7410903871504f179d3018dab441568fe0d74816f
+Deployed to: 0xE3C82840FA0605a424Cc1ea6BC013D12909E4e69
+Transaction hash: 0xc76aa13b2133faaf18f6885b09ea137dca8595d8bfde44db673ce9502ba780d4
 Starting contract verification...
 Waiting for etherscan to detect contract deployment...
-
-Submitting verification for [contracts/focusnft.sol:FocusNFT] Ok("0xdCB27C0bF715f6F5D3a91Fd19C872778687eFA56").
-
-Submitting verification for [contracts/focusnft.sol:FocusNFT] Ok("0xdCB27C0bF715f6F5D3a91Fd19C872778687eFA56").
-
-Submitting verification for [contracts/focusnft.sol:FocusNFT] Ok("0xdCB27C0bF715f6F5D3a91Fd19C872778687eFA56").
-
-Submitting verification for [contracts/focusnft.sol:FocusNFT] Ok("0xdCB27C0bF715f6F5D3a91Fd19C872778687eFA56").
+Submitting verification for [contracts/focusnft.sol:FocusNFT] "0xE3C82840FA0605a424Cc1ea6BC013D12909E4e69".
+Submitting verification for [contracts/focusnft.sol:FocusNFT] "0xE3C82840FA0605a424Cc1ea6BC013D12909E4e69".
+Submitting verification for [contracts/focusnft.sol:FocusNFT] "0xE3C82840FA0605a424Cc1ea6BC013D12909E4e69".
+Submitting verification for [contracts/focusnft.sol:FocusNFT] "0xE3C82840FA0605a424Cc1ea6BC013D12909E4e69".
+Submitting verification for [contracts/focusnft.sol:FocusNFT] "0xE3C82840FA0605a424Cc1ea6BC013D12909E4e69".
+Submitting verification for [contracts/focusnft.sol:FocusNFT] "0xE3C82840FA0605a424Cc1ea6BC013D12909E4e69".
 Submitted contract for verification:
 	Response: `OK`
-	GUID: `mespmivbblbxrqivihpzpnpabrj9ia1km6egtqinzjavqgfl8b`
+	GUID: `t9vv9nchkmyegvpkpeiypev8vnnat2w7ryfxnesy3ilebhhiqw`
 	URL:
-        https://goerli.etherscan.io/address/0xdcb27c0bf715f6f5d3a91fd19c872778687efa56
-
+        https://goerli.etherscan.io/address/0xe3c82840fa0605a424cc1ea6bc013d12909e4e69
 Waiting for verification result...
-
 Contract successfully verified
 ```
 
