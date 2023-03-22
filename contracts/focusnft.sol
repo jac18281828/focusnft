@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: BSD-3-Clause
 /*
- * Copyright 2022 John Cairns
+ * Copyright 2022,2023 John Cairns
  *
  * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
  *
@@ -49,12 +49,7 @@ contract FocusNFT is ERC721, IERC721Enumerable, Ownable {
         _;
     }
 
-    function mintToken(address _recipient)
-        public
-        payable
-        requireValidRecipient(_recipient)
-        returns (uint256)
-    {
+    function mintToken(address _recipient) public payable onlyOwner requireValidRecipient(_recipient) returns (uint256) {
         require(_currentTokenId < MAX_SUPPLY, "Total supply exhausted");
         uint256 tokenIndex = _currentTokenId++;
         uint256 tokenId = _currentTokenId;
@@ -65,23 +60,13 @@ contract FocusNFT is ERC721, IERC721Enumerable, Ownable {
         return tokenId;
     }
 
-    function transferFrom(
-        address _from,
-        address _to,
-        uint256 _tokenId
-    ) public virtual override(ERC721, IERC721) {
+    function transferFrom(address _from, address _to, uint256 _tokenId) public virtual override(ERC721, IERC721) {
         super.transferFrom(_from, _to, _tokenId);
         removeOwnerSupply(_from, _tokenId);
         addOwnerSupply(_to, _tokenId);
     }
 
-    function tokenURI(uint256 tokenId)
-        public
-        view
-        virtual
-        override
-        returns (string memory)
-    {
+    function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
         require(ownerOf(tokenId) != address(0), "Token does not exist");
         return bytes(_baseUri).length > 0 ? _baseUri : "";
     }
@@ -90,11 +75,7 @@ contract FocusNFT is ERC721, IERC721Enumerable, Ownable {
         return _currentTokenId;
     }
 
-    function tokenOfOwnerByIndex(address _owner, uint256 _index)
-        external
-        view
-        returns (uint256)
-    {
+    function tokenOfOwnerByIndex(address _owner, uint256 _index) external view returns (uint256) {
         OwnerSupply storage ownerSupply = _ownerSupply[_owner];
         require(_index < ownerSupply._totalCount, "Invalid token index");
         return ownerSupply._supply[_index];
@@ -105,16 +86,8 @@ contract FocusNFT is ERC721, IERC721Enumerable, Ownable {
         return _tokenSupplyIndex[_index];
     }
 
-    function supportsInterface(bytes4 interfaceId)
-        public
-        view
-        virtual
-        override(IERC165, ERC721)
-        returns (bool)
-    {
-        return
-            interfaceId == type(IERC721Enumerable).interfaceId ||
-            super.supportsInterface(interfaceId);
+    function supportsInterface(bytes4 interfaceId) public view virtual override(IERC165, ERC721) returns (bool) {
+        return interfaceId == type(IERC721Enumerable).interfaceId || super.supportsInterface(interfaceId);
     }
 
     function addOwnerSupply(address _recipient, uint256 _tokenId) private {
@@ -125,10 +98,7 @@ contract FocusNFT is ERC721, IERC721Enumerable, Ownable {
         }
     }
 
-    function removeOwnerSupply(address _wallet, uint256 _tokenId)
-        private
-        requireValidTokenId(_tokenId)
-    {
+    function removeOwnerSupply(address _wallet, uint256 _tokenId) private requireValidTokenId(_tokenId) {
         if (_wallet != address(0)) {
             OwnerSupply storage ownerSupply = _ownerSupply[_wallet];
             for (uint256 i = 0; i < ownerSupply._totalCount; i++) {

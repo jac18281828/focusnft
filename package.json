@@ -1,32 +1,39 @@
 {
   "name": "focusnft",
-  "version": "0.2.1",
-  "description": "openzeppelin NFT Contract Complete Example",
+  "version": "0.4.0",
+  "description": "OpenZeppelin NFT Contract Complete Example",
   "main": "index.js",
   "directories": {
     "doc": "docs",
     "lib": "lib",
+    "contracts": "contracts",
     "test": "test"
   },
   "scripts": {
-    "build": "~mr/.cargo/bin/forge build --sizes",
-    "lint": "solium -d contracts",
-    "lint:fix": "solium -d contracts --fix",
-    "test": "~mr/.cargo/bin/forge test -vvv"
+    "build": "forge build --sizes",
+    "prettier:check": "prettier --check \"(contracts|test)/**.sol\"",
+    "prettier:fix": "prettier --write \"(contracts|test)/**.sol\"",
+    "hint": "solhint contracts/**/*.sol test/**/*.sol",
+    "test": "~mr/.cargo/bin/forge test -vvv",
+    "clean": "forge clean && forge cache clean"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jac18281828/ethnft.git"
+    "url": "git+https://github.com/jac18281828/focusnft.git"
+  },
+  "devDependencies": {
+    "solhint": "3.3.8"
   },
   "dependencies": {
-    "@openzeppelin/contracts": "4.7.3",
-    "ethlint": "1.2.5"
+    "@openzeppelin/contracts": "4.8.2",
+    "prettier": "2.8.6",
+    "prettier-plugin-solidity": "1.1.3"
   },
   "keywords": [],
   "author": "",
   "license": "BSD-3-Clause",
   "bugs": {
-    "url": "https://github.com/jac18281828/ethnft/issues"
+    "url": "https://github.com/jac18281828/focusnft/issues"
   },
-  "homepage": "https://github.com/jac18281828/ethnft"
+  "homepage": "https://github.com/jac18281828/focusnft"
 }

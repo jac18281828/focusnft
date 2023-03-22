@@ -17,9 +17,7 @@ contract FocusNftTests is Test {
 
     function setUp() public {
         // Deploy NFT contract
-        nft = new FocusNFT(
-            "https://ipfs.io/ipfs/QmbPRkfUxB5mA2JXr5ZUWxLzpvEGT5qoRGe8z7GPicokXc"
-        );
+        nft = new FocusNFT("https://ipfs.io/ipfs/QmbPRkfUxB5mA2JXr5ZUWxLzpvEGT5qoRGe8z7GPicokXc");
     }
 
     function testToAddress() public {
@@ -101,10 +99,7 @@ contract FocusNftTests is Test {
     }
 
     function testFailMintMaxTotalSupply() public {
-        uint256 slot = stdstore
-            .target(address(nft))
-            .sig("currentTokenId()")
-            .find();
+        uint256 slot = stdstore.target(address(nft)).sig("currentTokenId()").find();
         bytes32 loc = bytes32(slot);
         bytes32 mockedCurrentTokenId = bytes32(abi.encode(10000));
         vm.store(address(nft), loc, mockedCurrentTokenId);
@@ -114,11 +109,7 @@ contract FocusNftTests is Test {
     function testSafeContractReceiver() public {
         Receiver receiver = new Receiver();
         nft.mintToken(address(receiver));
-        uint256 slotBalance = stdstore
-            .target(address(nft))
-            .sig(nft.balanceOf.selector)
-            .with_key(address(receiver))
-            .find();
+        uint256 slotBalance = stdstore.target(address(nft)).sig(nft.balanceOf.selector).with_key(address(receiver)).find();
 
         uint256 balance = uint256(vm.load(address(nft), bytes32(slotBalance)));
         assertEq(balance, 1);
@@ -147,9 +138,9 @@ contract FocusNftTests is Test {
 
 contract Receiver is IERC721Receiver {
     function onERC721Received(
-        address, /* operator */
-        address, /* from */
-        uint256, /* id */
+        address /* operator */,
+        address /* from */,
+        uint256 /* id */,
         bytes calldata /* data */
     ) external pure returns (bytes4) {
         return this.onERC721Received.selector;
