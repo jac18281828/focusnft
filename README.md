@@ -1,10 +1,9 @@
 # NFT Smart Contract Simple Working Example
 
-* Foundry 
-* Docker
+- Foundry
+- Docker
 
-### Deploy the smart contract 
-
+### Deploy the smart contract
 
 #### 0.2.0 Deployment Address
 
@@ -14,9 +13,7 @@ Transaction hash: 0xe82a3c9edf283cea35e2ae54229b8e24fa6d6b7258304a77d9d12448a7ed
 
 [Etherscan.io](https://goerli.etherscan.io/address/0xff8967a1d1936c9659697b38ee256f34ec6bc756)
 
-
-1. `forge create --contracts contracts/focusnft.sol --rpc-url ${DEVNET_RPC} --private-key ${DEVNET_WALLET} --etherscan-api-key ${ETHERSCAN_API_KEY} --verify FocusNFT --constructor-args 'https://ipfs.io/ipfs/QmbPRkfUxB5mA2JXr5ZUWxLzpvEGT5qoRGe8z7GPicokXc'`
-
+1. `forge create --contracts contracts/FocusNFT.sol --rpc-url ${DEVNET_RPC} --private-key ${DEVNET_WALLET} --etherscan-api-key ${ETHERSCAN_API_KEY} --verify FocusNFT --constructor-args 'https://ipfs.io/ipfs/QmbPRkfUxB5mA2JXr5ZUWxLzpvEGT5qoRGe8z7GPicokXc'`
 
 ### 0.2.1
 
@@ -29,12 +26,12 @@ Deployed to: 0xE3C82840FA0605a424Cc1ea6BC013D12909E4e69
 Transaction hash: 0xc76aa13b2133faaf18f6885b09ea137dca8595d8bfde44db673ce9502ba780d4
 Starting contract verification...
 Waiting for etherscan to detect contract deployment...
-Submitting verification for [contracts/focusnft.sol:FocusNFT] "0xE3C82840FA0605a424Cc1ea6BC013D12909E4e69".
-Submitting verification for [contracts/focusnft.sol:FocusNFT] "0xE3C82840FA0605a424Cc1ea6BC013D12909E4e69".
-Submitting verification for [contracts/focusnft.sol:FocusNFT] "0xE3C82840FA0605a424Cc1ea6BC013D12909E4e69".
-Submitting verification for [contracts/focusnft.sol:FocusNFT] "0xE3C82840FA0605a424Cc1ea6BC013D12909E4e69".
-Submitting verification for [contracts/focusnft.sol:FocusNFT] "0xE3C82840FA0605a424Cc1ea6BC013D12909E4e69".
-Submitting verification for [contracts/focusnft.sol:FocusNFT] "0xE3C82840FA0605a424Cc1ea6BC013D12909E4e69".
+Submitting verification for [contracts/FocusNFT.sol:FocusNFT] "0xE3C82840FA0605a424Cc1ea6BC013D12909E4e69".
+Submitting verification for [contracts/FocusNFT.sol:FocusNFT] "0xE3C82840FA0605a424Cc1ea6BC013D12909E4e69".
+Submitting verification for [contracts/FocusNFT.sol:FocusNFT] "0xE3C82840FA0605a424Cc1ea6BC013D12909E4e69".
+Submitting verification for [contracts/FocusNFT.sol:FocusNFT] "0xE3C82840FA0605a424Cc1ea6BC013D12909E4e69".
+Submitting verification for [contracts/FocusNFT.sol:FocusNFT] "0xE3C82840FA0605a424Cc1ea6BC013D12909E4e69".
+Submitting verification for [contracts/FocusNFT.sol:FocusNFT] "0xE3C82840FA0605a424Cc1ea6BC013D12909E4e69".
 Submitted contract for verification:
 	Response: `OK`
 	GUID: `t9vv9nchkmyegvpkpeiypev8vnnat2w7ryfxnesy3ilebhhiqw`
@@ -43,4 +40,3 @@ Submitted contract for verification:
 Waiting for verification result...
 Contract successfully verified
 ```
-

@@ -47,6 +47,6 @@ jobs:
 
       - name: Deploy Görli Testnet
         run: |
-          forge create --contracts contracts/focusnft.sol --rpc-url ${DEVNET_RPC} --private-key ${DEVNET_WALLET} --etherscan-api-key ${ETHERSCAN_API_KEY} --verify FocusNFT --constructor-args 'https://ipfs.io/ipfs/QmbPRkfUxB5mA2JXr5ZUWxLzpvEGT5qoRGe8z7GPicokXc'
-          forge inspect contracts/focusnft.sol:FocusNFT abi
+          forge create --contracts contracts/FocusNFT.sol --rpc-url ${DEVNET_RPC} --private-key ${DEVNET_WALLET} --etherscan-api-key ${ETHERSCAN_API_KEY} --verify FocusNFT --constructor-args 'https://ipfs.io/ipfs/QmbPRkfUxB5mA2JXr5ZUWxLzpvEGT5qoRGe8z7GPicokXc'
+          forge inspect contracts/FocusNFT.sol:FocusNFT abi
         if: ${{ github.event_name == 'release' && github.event.action == 'created' }}

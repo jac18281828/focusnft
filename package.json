@@ -1,5 +1,5 @@
 {
-  "name": "focusnft",
+  "name": "FocusNFT",
   "version": "0.4.0",
   "description": "OpenZeppelin NFT Contract Complete Example",
   "main": "index.js",
@@ -19,7 +19,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jac18281828/focusnft.git"
+    "url": "git+https://github.com/jac18281828/FocusNFT.git"
   },
   "devDependencies": {
     "solhint": "3.3.8"
@@ -33,7 +33,7 @@
   "author": "",
   "license": "BSD-3-Clause",
   "bugs": {
-    "url": "https://github.com/jac18281828/focusnft/issues"
+    "url": "https://github.com/jac18281828/FocusNFT/issues"
   },
-  "homepage": "https://github.com/jac18281828/focusnft"
+  "homepage": "https://github.com/jac18281828/FocusNFT"
 }
