@@ -37,7 +37,8 @@ jobs:
       - name: Yarn install
         run: |
           yarn install --dev
-          yarn lint
+          yarn prettier:check
+          yarn hint
           yarn install --production
 
       - name: Run Forge tests
@@ -45,8 +46,7 @@ jobs:
           forge test -vvv
         id: test
 
-      - name: Deploy Görli Testnet
+      - name: Deploy Sepolia Testnet
         run: |
-          forge create --contracts contracts/FocusNFT.sol --rpc-url ${DEVNET_RPC} --private-key ${DEVNET_WALLET} --etherscan-api-key ${ETHERSCAN_API_KEY} --verify FocusNFT --constructor-args 'https://ipfs.io/ipfs/QmbPRkfUxB5mA2JXr5ZUWxLzpvEGT5qoRGe8z7GPicokXc'
-          forge inspect contracts/FocusNFT.sol:FocusNFT abi
+          forge create --contracts contracts/FocusNFT.sol --rpc-url ${RPC_URL} --private-key ${PRIVATE_KEY} --etherscan-api-key ${ETHERSCAN_API_KEY} --verify FocusNFT --constructor-args 'https://ipfs.io/ipfs/QmbPRkfUxB5mA2JXr5ZUWxLzpvEGT5qoRGe8z7GPicokXc'
         if: ${{ github.event_name == 'release' && github.event.action == 'created' }}
