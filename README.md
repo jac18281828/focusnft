@@ -5,20 +5,42 @@
 
 ### Deploy the smart contract
 
-#### 0.2.0 Deployment Address
 
-Deployer: 0x6CEb0bF1f28ca4165d5C0A04f61DC733987eD6ad
-Deployed to: 0xfF8967a1d1936C9659697B38eE256F34eC6bc756
-Transaction hash: 0xe82a3c9edf283cea35e2ae54229b8e24fa6d6b7258304a77d9d12448a7edbad4
+#### 0.4.0 Deployment Address on Sepolia Testnet
 
-[Etherscan.io](https://goerli.etherscan.io/address/0xff8967a1d1936c9659697b38ee256f34ec6bc756)
+```
+ONCHAIN EXECUTION COMPLETE & SUCCESSFUL.
+Total Paid: 0.038220831098114943 ETH (12740277 gas * avg 3.000000007 gwei)
+##
+Start verification for (1) contracts
+Start verifying contract `0x8d9e6804afafbbe38a853f533567e0da3f116ed5` deployed on sepolia
+
+Submitting verification for [contracts/FocusNFT.sol:FocusNFT] "0x8D9e6804AFAFBbe38a853f533567e0DA3F116Ed5".
+Submitted contract for verification:
+        Response: `OK`
+        GUID: `gmz1yflapypardmxsz2n1tgkz9uwvqcpijdwkyhcbldfmdfj9g`
+        URL:
+        https://sepolia.etherscan.io/address/0x8d9e6804afafbbe38a853f533567e0da3f116ed5
+Contract verification status:
+Response: `NOTOK`
+Details: `Pending in queue`
+Contract verification status:
+Response: `OK`
+Details: `Pass - Verified`
+Contract successfully verified
+All (1) contracts were verified!
+
+```
+
+
+### 
 
 1. `forge create --contracts contracts/FocusNFT.sol --rpc-url ${DEVNET_RPC} --private-key ${DEVNET_WALLET} --etherscan-api-key ${ETHERSCAN_API_KEY} --verify FocusNFT --constructor-args 'https://ipfs.io/ipfs/QmbPRkfUxB5mA2JXr5ZUWxLzpvEGT5qoRGe8z7GPicokXc'`
 
-### 0.2.1
+### 0.2.1 on Görli
 
 ```
-Compiling 21 files with 0.8.15
+COMPILING 21 files with 0.8.15
 Solc 0.8.15 finished in 3.51s
 Compiler run successful
 Deployer: 0x6CEb0bF1f28ca4165d5C0A04f61DC733987eD6ad
