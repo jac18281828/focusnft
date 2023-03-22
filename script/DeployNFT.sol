@@ -30,7 +30,7 @@ contract DeployNFT is Script {
         emit DeployNFT(address(nftContract));
         vm.startBroadcast();
         for (uint256 i = 0; i < 100; ++i) {
-            uint256 tokenId = nftContract.mintTo(msg.sender);
+            uint256 tokenId = nftContract.mintToken(msg.sender);
             emit TokenMint(address(nftContract), tokenId);
         }
         vm.stopBroadcast();

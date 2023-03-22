@@ -45,10 +45,10 @@
       "options": {
         "cwd": "${workspaceFolder}"
       },
-      "dependsOn": "hint",      
+      "dependsOn": "hint",
       "group": {
         "kind": "build",
-        "isDefault": true,
+        "isDefault": true
       }
     },
     {
@@ -58,11 +58,24 @@
       "options": {
         "cwd": "${workspaceFolder}"
       },
-      "dependsOn": "hint",      
+      "dependsOn": "hint",
       "group": {
         "kind": "test",
-        "isDefault": true,
+        "isDefault": true
       }
     },
+    {
+      "label": "deploynft",
+      "type": "shell",
+      "command": "forge script ./script/DeployNFT.sol --sig 'deploy()' --slow --broadcast --rpc-url ${RPC_URL} --private-key ${PRIVATE_KEY} --etherscan-api-key ${ETHERSCAN_API_KEY} --verify",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "dependsOn": "test",
+      "group": {
+        "kind": "test",
+        "isDefault": false
+      }
+    }
   ]
 }
