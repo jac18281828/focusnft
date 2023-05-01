@@ -28,8 +28,14 @@ contract DeployNFT is Script {
         vm.broadcast();
         FocusNFT nftContract = new FocusNFT(META_URL);
         emit DeployNFT(address(nftContract));
+    }
+
+    function mint() external {
+        address _nftAddr = vm.env.Address("NFT_CONTRACT");
+        FocusNft nftContract = FocusNFT(_nftAddr);
+        uint256 mintCount = vm.envUint("MINT_COUNT");
         vm.startBroadcast();
-        for (uint256 i = 0; i < 100; ++i) {
+        for (uint256 i = 0; i < mintCount; ++i) {
             uint256 tokenId = nftContract.mintToken(msg.sender);
             emit TokenMint(address(nftContract), tokenId);
         }
