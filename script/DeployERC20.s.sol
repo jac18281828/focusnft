@@ -14,32 +14,21 @@
  */
 pragma solidity 0.8.15;
 
+import { IERC20 } from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import { ERC20PresetFixedSupply } from "@openzeppelin/contracts/token/ERC20/presets/ERC20PresetFixedSupply.sol";
+
 import { Script } from "forge-std/Script.sol";
 
 import { FocusNFT } from "../contracts/FocusNFT.sol";
 
-contract DeployNFT is Script {
-    event NFTDeployed(address contractAddress);
-    event TokenMint(address contractAddress, uint256 tokenId);
-
-    string private constant META_URL = "https://ipfs.io/ipfs/QmbPRkfUxB5mA2JXr5ZUWxLzpvEGT5qoRGe8z7GPicokXc";
+contract DeployERC20 is Script {
+    event ERC20Deployed(address contractAddress);
 
     function deploy() external {
-        vm.broadcast();
-        FocusNFT nftContract = new FocusNFT(META_URL);
-        emit NFTDeployed(address(nftContract));
-    }
-
-    function mint() external {
-        address _nftAddr = vm.envAddress("NFT_CONTRACT");
-        address _destWallet = vm.envAddress("RECIPIENT");
         uint256 mintCount = vm.envUint("MINT_COUNT");
-        FocusNFT nftContract = FocusNFT(_nftAddr);
-        vm.startBroadcast();
-        for (uint256 i = 0; i < mintCount; ++i) {
-            uint256 tokenId = nftContract.mintToken(_destWallet);
-            emit TokenMint(address(nftContract), tokenId);
-        }
-        vm.stopBroadcast();
+        address _destWallet = vm.envAddress("RECIPIENT");
+        vm.broadcast();
+        IERC20 _token = new ERC20PresetFixedSupply("TestToken", "TT20", mintCount, _destWallet);
+        emit ERC20Deployed(address(_token));
     }
 }
