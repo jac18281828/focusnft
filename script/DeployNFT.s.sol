@@ -14,7 +14,7 @@
  */
 pragma solidity 0.8.20;
 
-import { Script, console2 } from "forge-std/Script.sol";
+import { Script } from "forge-std/Script.sol";
 
 import { FocusNFT } from "../contracts/FocusNFT.sol";
 
@@ -22,24 +22,21 @@ contract DeployNFT is Script {
     event NFTDeployed(address contractAddress);
     event TokenMint(address contractAddress, uint256 tokenId);
 
-    address public constant DEPLOYER_ADDRESS = 0x4e59b44847b379578588920cA78FbF26c0B4956C;
-
     string private constant META_URL = "https://ipfs.io/ipfs/QmbPRkfUxB5mA2JXr5ZUWxLzpvEGT5qoRGe8z7GPicokXc";
 
     function storeCode() external {
-        bytes memory createCode = abi.encodePacked(type(FocusNFT).creationCode, abi.encode(META_URL));
+        address _contractOwner = vm.envAddress("CONTRACT_OWNER");
+        bytes memory createCode = abi.encodePacked(type(FocusNFT).creationCode, abi.encode(META_URL, _contractOwner));
         vm.writeFile("./FocusNFT.bin", vm.toString(createCode));
     }
 
     function deploy() external {
         vm.startBroadcast();
-
-        // 0x0c731 - halloween version 01
-        bytes32 vanitySalt = 0x5d69c51ee37ee115e2e32db32c98241bd7e6db5a9dbd9d2c6d2051cb0b133272;
-
-        FocusNFT nftContract = new FocusNFT{ salt: vanitySalt }(META_URL);
+        address _contractOwner = vm.envAddress("CONTRACT_OWNER");
+        bytes32 _vanitySalt = vm.envBytes32("CONTRACT_SALT");
+        FocusNFT nftContract = new FocusNFT{ salt: _vanitySalt }(META_URL, _contractOwner);
+        nftContract.transferOwnership(_contractOwner);
         emit NFTDeployed(address(nftContract));
-        console2.log(address(nftContract));
         vm.stopBroadcast();
     }
 

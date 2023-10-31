@@ -22,7 +22,7 @@ contract FocusNftTests is Test {
 
     function setUp() public {
         // Deploy NFT contract
-        nft = new FocusNFT(META_URL);
+        nft = new FocusNFT(META_URL, address(this));
     }
 
     function testToAddress() public {

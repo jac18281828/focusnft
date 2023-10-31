@@ -69,6 +69,22 @@
       "type": "shell",
       "command": "forge script ./script/DeployNFT.s.sol --sig 'storeCode()'",
       "options": {
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "CONTRACT_OWNER": "0x6CEb0bF1f28ca4165d5C0A04f61DC733987eD6ad",
+        }
+      },
+      "dependsOn": "test",
+      "group": {
+        "kind": "test",
+        "isDefault": false
+      }
+    },
+    {
+      "label": "vanity",
+      "type": "shell",
+      "command": "yarn vanity",
+      "options": {
         "cwd": "${workspaceFolder}"
       },
       "dependsOn": "test",
@@ -82,13 +98,17 @@
       "type": "shell",
       "command": "forge script ./script/DeployNFT.s.sol --sig 'deploy()' --slow --broadcast --rpc-url ${RPC_URL} --private-key ${PRIVATE_KEY} --etherscan-api-key ${ETHERSCAN_API_KEY} --verify",
       "options": {
-        "cwd": "${workspaceFolder}"
+        "cwd": "${workspaceFolder}",
+        "env": {
+          "CONTRACT_OWNER": "0x6CEb0bF1f28ca4165d5C0A04f61DC733987eD6ad",
+          "CONTRACT_SALT": "0x2bdab08beaeffa68efd6664e1d3d60c214d546fff0e9fadd0279b27ad93c3236"
+        }
       },
       "dependsOn": "test",
       "group": {
         "kind": "test",
         "isDefault": false
-      }
+      },
     },
     {
       "label": "mintnft",
@@ -97,9 +117,9 @@
       "options": {
         "cwd": "${workspaceFolder}",
         "env": {
-          "NFT_CONTRACT": "0x8d9e6804afafbbe38a853f533567e0da3f116ed5",
-          "RECIPIENT": "0x22A653801bB0bb85BE38765cC072144736635eE8",
-          "MINT_COUNT": "100"
+          "NFT_CONTRACT": "0x0C7318c65A1c1028A6bD01c7108cA064B3a4A301",
+          "RECIPIENT": "0x6CEb0bF1f28ca4165d5C0A04f61DC733987eD6ad",
+          "MINT_COUNT": "10"
         }
       },
       "dependsOn": "test",

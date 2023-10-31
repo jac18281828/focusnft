@@ -43,7 +43,7 @@ contract FocusNFT is ERC721, IERC721Enumerable, Ownable {
         mapping(uint256 => uint256) _supply;
     }
 
-    constructor(string memory __baseUri) ERC721("Focus", "FCUS") Ownable(msg.sender) {
+    constructor(string memory __baseUri, address _owner) ERC721("Focus", "FCUS") Ownable(_owner) {
         _baseUri = __baseUri;
     }
 

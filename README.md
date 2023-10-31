@@ -5,7 +5,11 @@
 
 ### Deploy the smart contract
 
-How to deploy with a vanity address:
+How to deploy with a vanity address. Undocumented foundry feature.
+
+```
+    address public constant DEPLOYER_ADDRESS = 0x4e59b44847b379578588920cA78FbF26c0B4956C;
+```
 
 1. save the contract code by running task `storecode`
 2. generate the vanity address `yarn vanity`
@@ -25,23 +29,17 @@ FocusNFT nftContract = new FocusNFT{salt: vanitysalt}(_nftAddr);
 
 ```
 ONCHAIN EXECUTION COMPLETE & SUCCESSFUL.
-Total Paid: 0.004188003205212147 ETH (1396001 gas * avg 3.000000147 gwei)
+Total Paid: 0.00426947401423158 ETH (1423158 gas * avg 3.00000001 gwei)
 ##
 Start verification for (1) contracts
-Start verifying contract `0x0C7318775b393eBa3fCBE28B35aea87e204f0801` deployed on sepolia
+Start verifying contract `0x0C7318c65A1c1028A6bD01c7108cA064B3a4A301` deployed on sepolia
 
-Submitting verification for [contracts/FocusNFT.sol:FocusNFT] "0x0C7318775b393eBa3fCBE28B35aea87e204f0801".
-
-Submitting verification for [contracts/FocusNFT.sol:FocusNFT] "0x0C7318775b393eBa3fCBE28B35aea87e204f0801".
-
-Submitting verification for [contracts/FocusNFT.sol:FocusNFT] "0x0C7318775b393eBa3fCBE28B35aea87e204f0801".
-
-Submitting verification for [contracts/FocusNFT.sol:FocusNFT] "0x0C7318775b393eBa3fCBE28B35aea87e204f0801".
+Submitting verification for [contracts/FocusNFT.sol:FocusNFT] "0x0C7318c65A1c1028A6bD01c7108cA064B3a4A301".
 Submitted contract for verification:
         Response: `OK`
-        GUID: `jjtiyjau3kzinwbnaapvyifpmznchcu2wxkugps93vk9pieyun`
+        GUID: `ikj1eruhkejlqciuudmexbhwqrzacsnyudwnus1jtrpn4samg9`
         URL:
-        https://sepolia.etherscan.io/address/0x0c7318775b393eba3fcbe28b35aea87e204f0801
+        https://sepolia.etherscan.io/address/0x0c7318c65a1c1028a6bd01c7108ca064b3a4a301
 Contract verification status:
 Response: `NOTOK`
 Details: `Pending in queue`
