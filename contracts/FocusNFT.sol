@@ -12,15 +12,23 @@
  *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-pragma solidity 0.8.15;
+pragma solidity 0.8.20;
 
-import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
+import { ERC721, IERC721 } from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import { IERC165 } from "@openzeppelin/contracts/utils/introspection/IERC165.sol";
+import { IERC721Enumerable } from "@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol";
+import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
 
 contract FocusNFT is ERC721, IERC721Enumerable, Ownable {
+    error InvalidRecipient();
+    error InvalidToken();
+    error TokenSupplyExhausted();
+    error TokenDoesNotExist();
+    error InvalidTokenIndex();
+    error TokenNotFoundInOwnerSupply();
+
     event FocusTokenMint(uint256 id, address recipient);
+
     uint256 public constant MAX_SUPPLY = 10000;
 
     string public _baseUri;
@@ -35,22 +43,22 @@ contract FocusNFT is ERC721, IERC721Enumerable, Ownable {
         mapping(uint256 => uint256) _supply;
     }
 
-    constructor(string memory __baseUri) ERC721("Focus", "FCUS") {
+    constructor(string memory __baseUri) ERC721("Focus", "FCUS") Ownable(msg.sender) {
         _baseUri = __baseUri;
     }
 
     modifier requireValidRecipient(address _recipient) {
-        require(_recipient != address(0), "invalid recipient");
+        if (_recipient == address(0)) revert InvalidRecipient();
         _;
     }
 
     modifier requireValidTokenId(uint256 _tokenId) {
-        require(_tokenId > 0, "invalid tokenId");
+        if (_tokenId == 0) revert InvalidToken();
         _;
     }
 
     function mintToken(address _recipient) public payable onlyOwner requireValidRecipient(_recipient) returns (uint256) {
-        require(_currentTokenId < MAX_SUPPLY, "Total supply exhausted");
+        if (_currentTokenId >= MAX_SUPPLY) revert TokenSupplyExhausted();
         uint256 tokenIndex = _currentTokenId++;
         uint256 tokenId = _currentTokenId;
         _safeMint(_recipient, tokenId);
@@ -67,7 +75,7 @@ contract FocusNFT is ERC721, IERC721Enumerable, Ownable {
     }
 
     function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
-        require(ownerOf(tokenId) != address(0), "Token does not exist");
+        if (ownerOf(tokenId) == address(0)) revert TokenDoesNotExist();
         return bytes(_baseUri).length > 0 ? _baseUri : "";
     }
 
@@ -77,12 +85,12 @@ contract FocusNFT is ERC721, IERC721Enumerable, Ownable {
 
     function tokenOfOwnerByIndex(address _owner, uint256 _index) external view returns (uint256) {
         OwnerSupply storage ownerSupply = _ownerSupply[_owner];
-        require(_index < ownerSupply._totalCount, "Invalid token index");
+        if (_index >= ownerSupply._totalCount) revert InvalidTokenIndex();
         return ownerSupply._supply[_index];
     }
 
     function tokenByIndex(uint256 _index) public view returns (uint256) {
-        require(_index < _currentTokenId, "Invalid token index");
+        if (_index >= _currentTokenId) revert InvalidTokenIndex();
         return _tokenSupplyIndex[_index];
     }
 
@@ -112,7 +120,7 @@ contract FocusNFT is ERC721, IERC721Enumerable, Ownable {
                     return;
                 }
             }
-            revert("Token not found in owner list");
+            revert TokenNotFoundInOwnerSupply();
         }
     }
 }

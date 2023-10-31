@@ -1,14 +1,17 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity 0.8.15;
+pragma solidity 0.8.20;
 
-import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
-import "@openzeppelin/contracts/interfaces/IERC721.sol";
-import "@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol";
+// solhint-disable one-contract-per-file
 
-import "forge-std/Test.sol";
+import { ERC165 } from "@openzeppelin/contracts/utils/introspection/ERC165.sol";
+import { IERC721 } from "@openzeppelin/contracts/interfaces/IERC721.sol";
+import { IERC721Enumerable } from "@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol";
+import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
 
-import "../contracts/FocusNFT.sol";
-import "@openzeppelin/contracts/interfaces/IERC721Receiver.sol";
+import { Test, stdStorage, StdStorage } from "forge-std/Test.sol";
+
+import { FocusNFT } from "../contracts/FocusNFT.sol";
+import { Receiver } from "./util/Receiver.sol";
 
 contract FocusNftTests is Test {
     using stdStorage for StdStorage;
@@ -139,18 +142,7 @@ contract FocusNftTests is Test {
 
     function testMintRequiresOwner() public {
         vm.prank(address(0x1));
-        vm.expectRevert("Ownable: caller is not the owner");
+        vm.expectRevert(abi.encodeWithSelector(Ownable.OwnableUnauthorizedAccount.selector, address(0x1)));
         nft.mintToken(address(0x1));
-    }
-}
-
-contract Receiver is IERC721Receiver {
-    function onERC721Received(
-        address /* operator */,
-        address /* from */,
-        uint256 /* id */,
-        bytes calldata /* data */
-    ) external pure returns (bytes4) {
-        return this.onERC721Received.selector;
     }
 }

@@ -1,15 +1,15 @@
 {
-    "extends": "solhint:recommended",
-    "rules": {
-      "compiler-version": [
-        "error",
-        "0.8.15"
-      ],
-      "func-visibility": [
-        "warn",
-        {
-          "ignoreConstructors": true
-        }
-      ]
-    }
+  "extends": "solhint:recommended",
+  "rules": {
+    "compiler-version": [
+      "error",
+      "0.8.20"
+    ],
+    "func-visibility": [
+      "warn",
+      {
+        "ignoreConstructors": true
+      }
+    ]
   }
+}

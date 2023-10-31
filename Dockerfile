@@ -1,11 +1,11 @@
-FROM ghcr.io/collectivexyz/foundry:latest
+FROM ghcr.io/xmtp/foundry:latest
 
 ARG PROJECT=FocusNFT
 WORKDIR /workspaces/${PROJECT}
-RUN chown -R mr.mr .
-COPY --chown=mr:mr . .
-ENV USER=mr
-USER mr
+RUN chown -R xmtp.xmtp .
+COPY --chown=xmtp:xmtp . .
+ENV USER=xmtp
+USER xmtp
 ENV PATH=${PATH}:~/.cargo/bin
 RUN yarn install
 RUN yarn prettier:check
