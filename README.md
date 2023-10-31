@@ -5,7 +5,17 @@
 
 ### Deploy the smart contract
 
-How to deploy with a vanity address
+How to deploy with a vanity address:
+
+1. save the contract code by running task `storecode`
+2. generate the vanity address `yarn vanity`
+3. convert the salt to hex
+   ```
+   cast --to-base 42251974336832307529671168963487630945990082533759568101302140718446315516530 16
+   0x5d69c51ee37ee115e2e32db32c98241bd7e6db5a9dbd9d2c6d2051cb0b133272
+   ```
+4. add hex salt to deployment script
+5. task `deploynft`
 
 ```
 FocusNFT nftContract = new FocusNFT{salt: vanitysalt}(_nftAddr);
@@ -15,17 +25,23 @@ FocusNFT nftContract = new FocusNFT{salt: vanitysalt}(_nftAddr);
 
 ```
 ONCHAIN EXECUTION COMPLETE & SUCCESSFUL.
-Total Paid: 0.038220831098114943 ETH (12740277 gas * avg 3.000000007 gwei)
+Total Paid: 0.004188003205212147 ETH (1396001 gas * avg 3.000000147 gwei)
 ##
 Start verification for (1) contracts
-Start verifying contract `0x8d9e6804afafbbe38a853f533567e0da3f116ed5` deployed on sepolia
+Start verifying contract `0x0C7318775b393eBa3fCBE28B35aea87e204f0801` deployed on sepolia
 
-Submitting verification for [contracts/FocusNFT.sol:FocusNFT] "0x8D9e6804AFAFBbe38a853f533567e0DA3F116Ed5".
+Submitting verification for [contracts/FocusNFT.sol:FocusNFT] "0x0C7318775b393eBa3fCBE28B35aea87e204f0801".
+
+Submitting verification for [contracts/FocusNFT.sol:FocusNFT] "0x0C7318775b393eBa3fCBE28B35aea87e204f0801".
+
+Submitting verification for [contracts/FocusNFT.sol:FocusNFT] "0x0C7318775b393eBa3fCBE28B35aea87e204f0801".
+
+Submitting verification for [contracts/FocusNFT.sol:FocusNFT] "0x0C7318775b393eBa3fCBE28B35aea87e204f0801".
 Submitted contract for verification:
         Response: `OK`
-        GUID: `gmz1yflapypardmxsz2n1tgkz9uwvqcpijdwkyhcbldfmdfj9g`
+        GUID: `jjtiyjau3kzinwbnaapvyifpmznchcu2wxkugps93vk9pieyun`
         URL:
-        https://sepolia.etherscan.io/address/0x8d9e6804afafbbe38a853f533567e0da3f116ed5
+        https://sepolia.etherscan.io/address/0x0c7318775b393eba3fcbe28b35aea87e204f0801
 Contract verification status:
 Response: `NOTOK`
 Details: `Pending in queue`
@@ -34,7 +50,6 @@ Response: `OK`
 Details: `Pass - Verified`
 Contract successfully verified
 All (1) contracts were verified!
-
 ```
 
 ###

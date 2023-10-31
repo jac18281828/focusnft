@@ -14,13 +14,15 @@
  */
 pragma solidity 0.8.20;
 
-import { Script } from "forge-std/Script.sol";
+import { Script, console2 } from "forge-std/Script.sol";
 
 import { FocusNFT } from "../contracts/FocusNFT.sol";
 
 contract DeployNFT is Script {
     event NFTDeployed(address contractAddress);
     event TokenMint(address contractAddress, uint256 tokenId);
+
+    address public constant DEPLOYER_ADDRESS = 0x4e59b44847b379578588920cA78FbF26c0B4956C;
 
     string private constant META_URL = "https://ipfs.io/ipfs/QmbPRkfUxB5mA2JXr5ZUWxLzpvEGT5qoRGe8z7GPicokXc";
 
@@ -31,10 +33,14 @@ contract DeployNFT is Script {
 
     function deploy() external {
         vm.startBroadcast();
-        bytes32 vanitySalt = "focusnft";
+
+        // 0x0c731 - halloween version 01
+        bytes32 vanitySalt = 0x5d69c51ee37ee115e2e32db32c98241bd7e6db5a9dbd9d2c6d2051cb0b133272;
+
         FocusNFT nftContract = new FocusNFT{ salt: vanitySalt }(META_URL);
-        vm.stopBroadcast();
         emit NFTDeployed(address(nftContract));
+        console2.log(address(nftContract));
+        vm.stopBroadcast();
     }
 
     function mint() external {

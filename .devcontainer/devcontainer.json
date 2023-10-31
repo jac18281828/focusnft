@@ -2,15 +2,25 @@
 // https://github.com/microsoft/vscode-dev-containers/tree/v0.238.0/containers/docker-existing-dockerfile
 {
   "name": "Existing Dockerfile",
-
   // Sets the run context to one level up instead of the .devcontainer folder.
   "context": "..",
-
   // Update the 'dockerFile' property if you aren't using the standard 'Dockerfile' filename.
   "dockerFile": "../Dockerfile",
+  "containerEnv": {
+    "NPM_TOKEN": "${localEnv:NPM_TOKEN}",
+    "PRIVATE_KEY": "${localEnv:PRIVATE_KEY}",
+    "PUBLIC_KEY": "${localEnv:PUBLIC_KEY}",
+    "RPC_URL": "${localEnv:RPC_URL}",
+    "OPG_URL": "${localEnv:OPG_URL}",
+    "GOERLI_URL": "${localEnv:GOERLI_URL}",
+    "ETHERSCAN_API_KEY": "${localEnv:ETHERSCAN_API_KEY}"
+  },
   "customizations": {
     "vscode": {
-      "extensions": ["JuanBlanco.solidity", "esbenp.prettier-vscode"]
+      "extensions": [
+        "JuanBlanco.solidity",
+        "esbenp.prettier-vscode"
+      ]
     }
   }
 }
