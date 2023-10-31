@@ -25,8 +25,10 @@ contract DeployNFT is Script {
     string private constant META_URL = "https://ipfs.io/ipfs/QmbPRkfUxB5mA2JXr5ZUWxLzpvEGT5qoRGe8z7GPicokXc";
 
     function deploy() external {
-        vm.broadcast();
-        FocusNFT nftContract = new FocusNFT(META_URL);
+        vm.startBroadcast();
+        address vanitySalt = 0x100;
+        FocusNFT nftContract = new FocusNFT{salt: vanitySalt}(META_URL);
+        vm.stopBroadcast();
         emit NFTDeployed(address(nftContract));
     }
 

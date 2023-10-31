@@ -5,6 +5,11 @@
 
 ### Deploy the smart contract
 
+How to deploy with a vanity address
+
+```
+FocusNFT nftContract = new FocusNFT{salt: vanitysalt}(_nftAddr);
+```
 
 #### 0.4.0 Deployment Address on Sepolia Testnet
 
@@ -32,8 +37,7 @@ All (1) contracts were verified!
 
 ```
 
-
-### 
+###
 
 1. `forge create --contracts contracts/FocusNFT.sol --rpc-url ${DEVNET_RPC} --private-key ${DEVNET_WALLET} --etherscan-api-key ${ETHERSCAN_API_KEY} --verify FocusNFT --constructor-args 'https://ipfs.io/ipfs/QmbPRkfUxB5mA2JXr5ZUWxLzpvEGT5qoRGe8z7GPicokXc'`
 
