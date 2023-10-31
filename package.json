@@ -15,14 +15,16 @@
     "prettier:fix": "prettier --write \"(contracts|test)/**.sol\"",
     "hint": "solhint contracts/**/*.sol test/**/*.sol",
     "test": "~mr/.cargo/bin/forge test -vvv",
-    "clean": "forge clean && forge cache clean"
+    "clean": "forge clean && forge cache clean",
+    "vanity": "vanityeth --contract -i 0c731 --create2 0x4e59b44847b379578588920cA78FbF26c0B4956C -b ./FocusNFT.bin"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jac18281828/FocusNFT.git"
   },
   "devDependencies": {
-    "solhint": "4.0.0"
+    "solhint": "4.0.0",
+    "vanity-eth": "2.0.1"
   },
   "dependencies": {
     "prettier": "3.0.3",

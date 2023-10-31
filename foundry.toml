@@ -3,3 +3,4 @@ src = 'contracts'
 out = 'out'
 optimize = false
 libs = ['lib']
+fs_permissions = [{access = "write", path = "./"}]

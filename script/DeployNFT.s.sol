@@ -24,10 +24,15 @@ contract DeployNFT is Script {
 
     string private constant META_URL = "https://ipfs.io/ipfs/QmbPRkfUxB5mA2JXr5ZUWxLzpvEGT5qoRGe8z7GPicokXc";
 
+    function storeCode() external {
+        bytes memory createCode = abi.encodePacked(type(FocusNFT).creationCode, abi.encode(META_URL));
+        vm.writeFile("./FocusNFT.bin", vm.toString(createCode));
+    }
+
     function deploy() external {
         vm.startBroadcast();
-        address vanitySalt = 0x100;
-        FocusNFT nftContract = new FocusNFT{salt: vanitySalt}(META_URL);
+        bytes32 vanitySalt = "focusnft";
+        FocusNFT nftContract = new FocusNFT{ salt: vanitySalt }(META_URL);
         vm.stopBroadcast();
         emit NFTDeployed(address(nftContract));
     }
